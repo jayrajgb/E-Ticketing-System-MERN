@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme{
+    --color-primary: #5f6fff;
+}
+
+.list-style{
+    @apply py-1 
+}
+
+.hr-style{
+    @apply border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden
+}
+.active hr{
+    @apply block
+}
