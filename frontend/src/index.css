@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
 @theme{
     --color-primary: #5f6fff;
+    --default-font-family: "Outfit";
+    --gridAuto: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .list-style{
@@ -13,4 +16,8 @@
 }
 .active hr{
     @apply block
+}
+
+.grid-style{
+    @apply grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))]
 }

@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <div className='flex justify-between items-center text-sm py-4 mb-5 border-b border-b-gray-400'>
-      <div className='flex justify-between gap-x-1 items-center text-lg'><TrainTrack /> GoRail </div>
+      <div className='flex justify-between gap-x-1 items-center text-lg cursor-pointer' onClick={()=>navigate("/")}><TrainTrack color='#5f6fff' /> GoRail </div>
       <ul className='hidden md:flex items-start gap-5 font-medium'>
         <NavLink to="/">
             <li className='list-style'>HOME</li>
@@ -40,10 +40,10 @@ const Navbar = () => {
                     <img className='w-8 rounded-full' src={profilepic} alt="profile" />
                     <ChevronDown className='w-4' />
                     <div className='absolute top-0 right-0 pt-14 text-gray-400 z-20 hidden group-hover:block font-medium'>
-                        <div className='min-w-36 bg-neutral-100 rounded flex flex-col gap-4 p-4'>
-                            <p onClick={()=>navigate("/profile")} className='hover:text-black cursor-pointer'>My Profile</p>
-                            <p onClick={()=>navigate("/bookings")} className='hover:text-black cursor-pointer'>Bookings History</p>
-                            <p onClick={()=>setToken(false)} className='hover:text-black cursor-pointer'>Logout</p>
+                        <div className='min-w-36 bg-gray-50 border border-indigo-400 rounded flex flex-col gap-4 p-4'>
+                            <p onClick={()=>navigate("/profile")} className='hover:text-primary cursor-pointer'>My Profile</p>
+                            <p onClick={()=>navigate("/bookings")} className='hover:text-primary cursor-pointer'>Bookings History</p>
+                            <p onClick={()=>setToken(false)} className='hover:text-primary cursor-pointer'>Logout</p>
                         </div>
                     </div>
                 </div>
