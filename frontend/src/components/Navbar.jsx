@@ -76,6 +76,7 @@ const Navbar = () => {
               <NavLink to='/trains' onClick={() => setSidebarOpen(false)}>TRAINS</NavLink>
               <NavLink to='/about' onClick={() => setSidebarOpen(false)}>ABOUT</NavLink>
               <NavLink to='/contact' onClick={() => setSidebarOpen(false)}>CONTACT</NavLink>
+              <NavLink target="_blank" href="https://e-ticketing-system-admin.onrender.com" class="border px-5 text-xs py-1.5 rounded-full">Admin Panel</NavLink>
             </nav>
           </div>
         </div>
