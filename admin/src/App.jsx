@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import AllTrains from './pages/AllTrains'
 import AllBookings from './pages/AllBookings'
 import AddTrains from './pages/AddTrains'
+import Footer from './components/Footer'
 
 const App = () => {
   
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/add-train' element={<AddTrains />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   ):(
     <div>

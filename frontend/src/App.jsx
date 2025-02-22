@@ -10,6 +10,7 @@ import Profile from './pages/Profile'
 import Book from './pages/Book'
 import Navbar from './components/Navbar'
 import { ToastContainer } from 'react-toastify'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/book/:trainId' element={<Book />} />
       </Routes>
+      <Footer />
       <ToastContainer />
     </div>
   )
