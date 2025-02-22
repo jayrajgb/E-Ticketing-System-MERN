@@ -49,7 +49,17 @@ async function loginAdmin (req, res) {
     }
 }
 
+async function getAllTrains(req, res) {
+    try {
+        const trains = await trainModel.find();
+        return res.json({ success: true, trains });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+}
+
 module.exports = {
     addTrain,
-    loginAdmin
+    loginAdmin,
+    getAllTrains
 }

@@ -2,8 +2,8 @@ const express = require('express')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const { connectDB } = require('./config/connection');
-const { addUser } = require('./controllers/userController');
-const { addTrain, loginAdmin } = require('./controllers/trainController');
+const { addUser, loginUser } = require('./controllers/userController');
+const { addTrain, loginAdmin, getAllTrains } = require('./controllers/trainController');
 const { authAdmin } = require('./middlewares/authAdmin');
 
 dotenv.config()
@@ -27,11 +27,17 @@ app.get("/", (req, res)=>{
     return res.send("Hello")
 })
 
-app.post("/api/user/create", addUser)
+app.post("/api/user/register", addUser)
+
+app.post("/api/user/login", loginUser)
 
 app.post("/api/admin/addtrain", authAdmin, addTrain)
 
 app.post("/api/admin/login", loginAdmin)
+
+app.get("/api/admin/trains", getAllTrains)
+
+
 
 app.listen(PORT, ()=>{
     console.log(`Server running at PORT: http://localhost:${PORT}`)

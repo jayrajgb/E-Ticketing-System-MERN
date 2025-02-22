@@ -5,3 +5,7 @@
   --color-primary: #5f6fff;
   --default-font-family: "Outfit";
 }
+
+.grid-style{
+  @apply grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))]
+}
