@@ -14,6 +14,7 @@ const Navbar = () => {
     setProfileMenuOpen(false)
     setToken("")
     localStorage.removeItem("token")
+    navigate("/")
   }
 
   return (
