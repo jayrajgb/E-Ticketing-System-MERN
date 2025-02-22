@@ -1,40 +1,70 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-export const AdminContext = createContext()
+import { toast } from "react-toastify";
 
-const AdminContextProvider = (props) => {
+export const AdminContext = createContext();
 
-    const [adminToken, setAdminToken] = useState(localStorage.getItem("admintoken") ? localStorage.getItem("admintoken") : "")
+const AdminContextProvider = ({ children }) => {
+  const [adminToken, setAdminToken] = useState(localStorage.getItem("admintoken") || "");
+  const [trains, setTrains] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const [trains, setTrains] = useState([])
-    
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    const getAllTrains = async () => {
-        try {
-            const { data } = await axios.get(backendUrl + "/api/admin/trains")
-            if(data.success){
-                setTrains(data.trains)
-            }else{
-                toast.error(data.message)
-            }
-        } catch (error) {
-            toast.error(error.message)
-        }
+  const getAllTrains = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${backendUrl}/api/admin/trains`);
+      if (data.success) {
+        setTrains(data.trains);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const value = {
-        adminToken,
-        setAdminToken,
-        backendUrl,
-        trains,
-        getAllTrains
+  const getAllBookings = async () => {
+    if (!adminToken) return;
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${backendUrl}/api/admin/bookings`, {
+        headers: { Authorization: `Bearer ${adminToken}` },
+      });
+      if (data.success) {
+        setBookings(data.bookings);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-    return (
-        <AdminContext.Provider value={value}>
-            {props.children}
-        </AdminContext.Provider>
-    )
-}
+  };
 
-export default AdminContextProvider
+  useEffect(() => {
+    if (adminToken) {
+      getAllBookings();
+    }
+  }, [adminToken]);
+
+  const value = {
+    adminToken,
+    setAdminToken,
+    backendUrl,
+    trains,
+    getAllTrains,
+    bookings,
+    getAllBookings,
+    loading,
+  };
+
+  return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
+};
+
+export default AdminContextProvider;

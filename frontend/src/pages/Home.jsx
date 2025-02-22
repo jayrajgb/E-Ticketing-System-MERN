@@ -1,6 +1,6 @@
 import React from 'react'
 import { MoveRight } from 'lucide-react'
-import train from '../assets/train.png'
+import train from '../assets/train-2.png'
 import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
           <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight'>
             Book Tickets <br /> With GoRail
           </p>
-          <button onClick={()=>navigate("/trains")} className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-200 font-medium'>
+          <button onClick={()=>navigate("/trains")} className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'>
             Book Ticket <MoveRight />
           </button>
         </div>

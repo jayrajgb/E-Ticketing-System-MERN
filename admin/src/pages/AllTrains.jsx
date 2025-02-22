@@ -15,7 +15,7 @@ const AllTrains = () => {
 
   return (
     <div className='sm:p-6 w-full'>
-      <h1>All Trains</h1>
+      <h1 className='mb-3 text-lg font-medium'>All Trains</h1>
       <div className='w-full grid-style gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
         {
           trains.map((item, index) => (

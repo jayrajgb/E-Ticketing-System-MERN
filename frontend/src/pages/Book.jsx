@@ -3,16 +3,73 @@ import { AppContext } from '../context/AppContext'
 import { useParams } from 'react-router-dom'
 import trainimg from '../assets/trains.png'
 import { IndianRupeeIcon, Info, Trash2 } from 'lucide-react'
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Book = () => {
   const { trainId } = useParams()
-  const { trains } = useContext(AppContext)
+  const { trains, userData, backendUrl, token } = useContext(AppContext)
   const [trainInfo, setTrainInfo] = useState(null)
   const [trainSlots, setTrainSlots] = useState([])
   const [slotIndex, setSlotIndex] = useState(0)
   const [slotTime, setSlotTime] = useState("")
   const [passengers, setPassengers] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+
+  const handleBookTicket = async () => {
+    try {
+      if (!userData) {
+        toast.error("Please login to book tickets")
+        return
+      }
+
+      if (!slotTime || passengers.some(p => !p.name || !p.age)) {
+        toast.error("Please fill all passenger details")
+        return
+      }
+
+      // Get selected date
+      const selectedDate = new Date()
+      selectedDate.setDate(selectedDate.getDate() + slotIndex)
+
+      // Format passengers data according to schema
+      const formattedPassengers = passengers.map(passenger => ({
+        name: passenger.name,
+        age: parseInt(passenger.age),
+        gender: passenger.gender,
+        disability: passenger.disability,
+        price: calculatePassengerPrice(passenger)
+      }))
+
+      const ticketData = {
+        userId: userData._id,
+        trainId: trainId,
+        slotDate: selectedDate.toISOString().split('T')[0],
+        slotTime: slotTime,
+        passengers: formattedPassengers,
+        status: "Booked"
+      }
+
+      const response = await axios.post(
+        `${backendUrl}/api/user/book`,
+        ticketData,
+        {
+          headers: { token }
+        }
+      )
+
+      if (response.data.success) {
+        toast.success("Ticket booked successfully!")
+        // You can add navigation here if needed
+        // navigate("/tickets")
+      } else {
+        toast.error(response.data.message)
+      }
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
+    }
+  }
 
   // Initialize with one passenger
   useEffect(() => {
@@ -36,12 +93,12 @@ const Book = () => {
 
     const allDaySlots = [];
     const today = new Date();
-    
+
     // Generate slots for next 7 days
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(today);
       currentDate.setDate(today.getDate() + i);
-      
+
       const timeSlots = [];
       const startHour = trainInfo.timings.startTime; // 6 AM start time
       const intervals = trainInfo.timings.intervals;
@@ -91,14 +148,14 @@ const Book = () => {
     const basePrice = trainInfo.price;
 
     // Free categories
-    if (passenger.disability || 
-        (passenger.age && (parseInt(passenger.age) >= 75 || parseInt(passenger.age) <= 2))) {
+    if (passenger.disability ||
+      (passenger.age && (parseInt(passenger.age) >= 75 || parseInt(passenger.age) <= 2))) {
       return 0;
     }
-    
+
     // 50% discount categories
-    if (passenger.gender === 'female' || 
-        (passenger.age && (parseInt(passenger.age) >= 3 && parseInt(passenger.age) <= 12))) {
+    if (passenger.gender === 'female' ||
+      (passenger.age && (parseInt(passenger.age) >= 3 && parseInt(passenger.age) <= 12))) {
       return basePrice * 0.5;
     }
 
@@ -141,9 +198,9 @@ const Book = () => {
     }
   }
 
-  useEffect(()=>{
-    console.log(trainSlots)
-  },[trainSlots])
+  // useEffect(() => {
+  //   console.log(trainSlots)
+  // }, [trainSlots])
 
   if (!trainInfo) {
     return <div className="p-4">Loading...</div>;
@@ -174,7 +231,7 @@ const Book = () => {
       {/* Time Slots Section */}
       <div className="mt-8 p-6 border border-gray-200 rounded-lg bg-white">
         <p className="text-xl font-medium mb-4">Select Date & Time</p>
-        
+
         {/* Day Selection */}
         <div className="mb-6">
           <p className="text-sm font-medium text-gray-700 mb-2">Select Date:</p>
@@ -188,11 +245,10 @@ const Book = () => {
                   setSlotIndex(idx);
                   setSlotTime("");
                 }}
-                className={`px-4 py-2 rounded-md text-sm whitespace-nowrap ${
-                  slotIndex === idx
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={`px-4 py-2 rounded-md text-sm whitespace-nowrap ${slotIndex === idx
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
               >
                 {day}
               </button>
@@ -208,11 +264,10 @@ const Book = () => {
               <button
                 key={idx}
                 onClick={() => setSlotTime(slot.time)}
-                className={`px-4 py-2 rounded-md text-sm ${
-                  slotTime === slot.time
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={`px-4 py-2 rounded-md text-sm ${slotTime === slot.time
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
               >
                 {slot.time}
               </button>
@@ -225,7 +280,7 @@ const Book = () => {
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-medium">Passenger Details</h2>
-          <button 
+          <button
             onClick={addPassenger}
             className="px-4 py-2 bg-primary text-white rounded-md text-sm"
           >
@@ -238,7 +293,7 @@ const Book = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-medium">Passenger {index + 1}</h3>
               {passengers.length > 1 && (
-                <button 
+                <button
                   onClick={() => removePassenger(passenger.id)}
                   className="text-red-500 hover:text-red-700"
                 >
@@ -246,7 +301,7 @@ const Book = () => {
                 </button>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -315,8 +370,9 @@ const Book = () => {
         <div className="text-xl font-medium mb-4">
           Total Price: <span className="text-primary">₹{totalPrice}</span>
         </div>
-        <button 
-          className='bg-primary text-white text-sm font-medium px-14 py-3 rounded-full disabled:opacity-50 disabled:cursor-not-allowed'
+        <button
+          onClick={handleBookTicket}
+          className='bg-primary text-white text-sm font-medium px-14 py-3 rounded-full disabled:opacity-50 cursor-pointer'
           disabled={!slotTime || passengers.some(p => !p.name || !p.age)}
         >
           Book Tickets

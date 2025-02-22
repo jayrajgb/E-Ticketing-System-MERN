@@ -1,12 +1,13 @@
 const trainModel = require('../models/trainSchema')
+const ticketModel = require('../models/ticketSchema')
 const jwt = require('jsonwebtoken')
 
-async function addTrain (req, res){
-    try{
-        const { name, code, from, to, seats, price, timings  } = req.body
+async function addTrain(req, res) {
+    try {
+        const { name, code, from, to, seats, price, timings } = req.body
 
-        if( !name || !code || !from || !to || !seats || !price || !timings ){
-            return res.json({success:false, message:"Detials Incomplete!"})
+        if (!name || !code || !from || !to || !seats || !price || !timings) {
+            return res.json({ success: false, message: "Detials Incomplete!" })
         }
 
         const createTrain = await trainModel.create({
@@ -19,33 +20,33 @@ async function addTrain (req, res){
             timings: timings,
         })
 
-        return res.json({success: true, message:"Train added successfully!"})
+        return res.json({ success: true, message: "Train added successfully!" })
     }
-    catch(err){
-        return res.json({success: false, message:err.message})
+    catch (err) {
+        return res.json({ success: false, message: err.message })
     }
 }
 
-async function loginAdmin (req, res) {
+async function loginAdmin(req, res) {
     try {
-        
+
         const { email, password } = req.body
 
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
 
             const token = jwt.sign({
                 email: process.env.ADMIN_EMAIL,
                 password: process.env.ADMIN_PASSWORD
             }, process.env.JWT_SECRET)
 
-            return res.json({success: true, token})
+            return res.json({ success: true, token })
 
-        }else{
-            return res.json({success: false, message:"Invalid admin credentials!"})
+        } else {
+            return res.json({ success: false, message: "Invalid admin credentials!" })
         }
 
     } catch (error) {
-        return res.json({success: false, message:err.message})
+        return res.json({ success: false, message: err.message })
     }
 }
 
@@ -58,8 +59,19 @@ async function getAllTrains(req, res) {
     }
 }
 
+async function getAllBookings (req, res) {
+    try {
+        const bookings = await ticketModel.find();
+        res.status(200).json({ success: true, bookings });
+    } catch (error) {
+
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
 module.exports = {
     addTrain,
     loginAdmin,
-    getAllTrains
+    getAllTrains,
+    getAllBookings
 }

@@ -1,20 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from '../context/AppContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Profile = () => {
 
-  const [userData, setUserData] = useState({
-    name: "Jayraj Borate",
-    email: "jayrajgborate11@gmail.com",
-    phone: "7447292498",
-    age: 21,
-    gender: "Male",
-  })
+  const { userData, setUserData, token, backendUrl, loadUserProfile } = useContext(AppContext)
 
-  const [isEdit, setIsEdit] = useState(true)
+  const [isEdit, setIsEdit] = useState(false)
 
+  const updateProfile = async () => {
+    try {
+      const { data } = await axios.post(backendUrl + "/api/user/update", userData, {headers: {token}})
+      if (data.success) {
+        toast.success(data.message)
+        await loadUserProfile()
+        setIsEdit(false)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      // console.log(error.message)
+      toast.error(error.message)
+    }
+  }
 
-
-  return (
+  return userData && (
     <div className='max-w-lg flex flex-col gap-2'>
       {
         isEdit ?
@@ -64,9 +75,9 @@ const Profile = () => {
       <div className='mt-10'>
         {
           isEdit ?
-            <button className='rounded-full border border-primary px-8 py-2 hover:bg-primary hover:text-white transition-all' onClick={() => setIsEdit(false)}>Save</button>
+            <button className='rounded-full border border-primary px-8 py-2 hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={updateProfile}>Save</button>
             :
-            <button className='rounded-full border border-primary px-8 py-2 hover:bg-primary hover:text-white transition-all' onClick={() => setIsEdit(true)}>Edit</button>
+            <button className='rounded-full border border-primary px-8 py-2 hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(true)}>Edit</button>
         }
       </div>
     </div>

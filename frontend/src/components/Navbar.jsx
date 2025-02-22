@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { TrainTrack, ChevronDown, Menu, X } from 'lucide-react';
 import profilepic from '../assets/profile_pic.png';
+import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
-  const [token, setToken] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const { token, setToken } = useContext(AppContext)
+
+  const logout = () => {
+    setProfileMenuOpen(false)
+    setToken("")
+    localStorage.removeItem("token")
+  }
 
   return (
     <div className='flex justify-between items-center text-sm py-4 mb-5 border-b border-b-gray-400'>
       <div className='flex items-center gap-2'>
-        <button className='md:hidden' onClick={() => setSidebarOpen(true)}>
+        <button className='cursor-pointer md:hidden' onClick={() => setSidebarOpen(true)}>
           <Menu size={24} />
         </button>
         <div className='flex justify-between gap-x-1 items-center text-lg cursor-pointer' onClick={() => navigate('/')}> 
@@ -47,13 +53,13 @@ const Navbar = () => {
               <div className='absolute w-36 top-10 right-0 text-gray-400 z-20 bg-gray-50 border border-indigo-400 rounded flex flex-col gap-4 p-4'>
                 <p onClick={() => { navigate('/profile'); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>My Profile</p>
                 <p onClick={() => { navigate('/bookings'); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>Bookings History</p>
-                <p onClick={() => { setToken(false); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>Logout</p>
+                <p onClick={logout} className='hover:text-primary cursor-pointer'>Logout</p>
               </div>
             )}
           </div>
         ) : (
           <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full hidden md:block cursor-pointer'>
-            Create Account
+            Login / SignUp
           </button>
         )}
       </div>
@@ -62,7 +68,7 @@ const Navbar = () => {
       {sidebarOpen && (
         <div className='fixed inset-0 bg-black bg-opacity-50 z-50' onClick={() => setSidebarOpen(false)}>
           <div className='fixed left-0 top-0 w-64 h-full bg-white shadow-md p-5 flex flex-col' onClick={(e) => e.stopPropagation()}>
-            <button className='self-end' onClick={() => setSidebarOpen(false)}>
+            <button className='cursor-pointer self-end' onClick={() => setSidebarOpen(false)}>
               <X size={24} />
             </button>
             <nav className='mt-10 flex flex-col gap-4'>

@@ -9,6 +9,7 @@ import Bookings from './pages/Bookings'
 import Profile from './pages/Profile'
 import Book from './pages/Book'
 import Navbar from './components/Navbar'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/book/:trainId' element={<Book />} />
       </Routes>
+      <ToastContainer />
     </div>
   )
 }
