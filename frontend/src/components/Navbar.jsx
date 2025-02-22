@@ -43,6 +43,9 @@ const Navbar = () => {
           <li className='list-style'>CONTACT</li>
           <hr className='hr-style' />
         </NavLink>
+        <NavLink target='_blank' to='https://e-ticketing-system-frontend.onrender.com/'>
+          <li className='border border-gray-400 px-5 text-xs py-1.5 rounded-full'>Admin Panel</li>
+        </NavLink>
       </ul>
       <div className='flex items-center gap-4'>
         {token ? (
