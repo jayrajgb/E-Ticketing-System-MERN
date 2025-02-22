@@ -1,61 +1,81 @@
-import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { TrainTrack, ChevronDown } from 'lucide-react'
-import profilepic from '../assets/profile_pic.png'
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { TrainTrack, ChevronDown, Menu, X } from 'lucide-react';
+import profilepic from '../assets/profile_pic.png';
 
 const Navbar = () => {
-  
-  const navigate = useNavigate()
-
-  const [showMenu, setShowMenu] = useState(false)
-  const [token, setToken] = useState(true)
-
+  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  const [token, setToken] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   return (
     <div className='flex justify-between items-center text-sm py-4 mb-5 border-b border-b-gray-400'>
-      <div className='flex justify-between gap-x-1 items-center text-lg cursor-pointer' onClick={()=>navigate("/")}><TrainTrack color='#5f6fff' /> GoRail </div>
+      <div className='flex items-center gap-2'>
+        <button className='md:hidden' onClick={() => setSidebarOpen(true)}>
+          <Menu size={24} />
+        </button>
+        <div className='flex justify-between gap-x-1 items-center text-lg cursor-pointer' onClick={() => navigate('/')}> 
+          <TrainTrack color='#5f6fff' /> GoRail
+        </div>
+      </div>
       <ul className='hidden md:flex items-start gap-5 font-medium'>
-        <NavLink to="/">
-            <li className='list-style'>HOME</li>
-            <hr className='hr-style' />
+        <NavLink to='/'>
+          <li className='list-style'>HOME</li>
+          <hr className='hr-style' />
         </NavLink>
-        <NavLink to="/trains">
-            <li className='list-style'>TRAINS</li>
-            <hr className='hr-style' />
+        <NavLink to='/trains'>
+          <li className='list-style'>TRAINS</li>
+          <hr className='hr-style' />
         </NavLink>
-        <NavLink to="/about">
-            <li className='list-style'>ABOUT</li>
-            <hr className='hr-style' />
+        <NavLink to='/about'>
+          <li className='list-style'>ABOUT</li>
+          <hr className='hr-style' />
         </NavLink>
-        <NavLink to="/contact">
-            <li className='list-style'>CONTACT</li>
-            <hr className='hr-style' />
+        <NavLink to='/contact'>
+          <li className='list-style'>CONTACT</li>
+          <hr className='hr-style' />
         </NavLink>
       </ul>
       <div className='flex items-center gap-4'>
-        {
-            token ? 
-            (
-                <div className='flex items-center gap-2 cursor-pointer group relative'>
-                    <img className='w-8 rounded-full' src={profilepic} alt="profile" />
-                    <ChevronDown className='w-4' />
-                    <div className='absolute top-0 right-0 pt-14 text-gray-400 z-20 hidden group-hover:block font-medium'>
-                        <div className='min-w-36 bg-gray-50 border border-indigo-400 rounded flex flex-col gap-4 p-4'>
-                            <p onClick={()=>navigate("/profile")} className='hover:text-primary cursor-pointer'>My Profile</p>
-                            <p onClick={()=>navigate("/bookings")} className='hover:text-primary cursor-pointer'>Bookings History</p>
-                            <p onClick={()=>setToken(false)} className='hover:text-primary cursor-pointer'>Logout</p>
-                        </div>
-                    </div>
-                </div>
-            )
-            :
-            (
-                <button onClick={()=>navigate("/login")} className='bg-primary text-white px-8 py-3 rounded-full hidden md:block cursor-pointer'>Create Account</button>
-            )
-        }
+        {token ? (
+          <div className='flex items-center gap-2 cursor-pointer relative' onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
+            <img className='w-8 rounded-full' src={profilepic} alt='profile' />
+            <ChevronDown className='w-4' />
+            {profileMenuOpen && (
+              <div className='absolute w-36 top-10 right-0 text-gray-400 z-20 bg-gray-50 border border-indigo-400 rounded flex flex-col gap-4 p-4'>
+                <p onClick={() => { navigate('/profile'); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>My Profile</p>
+                <p onClick={() => { navigate('/bookings'); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>Bookings History</p>
+                <p onClick={() => { setToken(false); setProfileMenuOpen(false); }} className='hover:text-primary cursor-pointer'>Logout</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full hidden md:block cursor-pointer'>
+            Create Account
+          </button>
+        )}
       </div>
-    </div>
-  )
-}
 
-export default Navbar
+      {/* Sidebar Menu */}
+      {sidebarOpen && (
+        <div className='fixed inset-0 bg-black bg-opacity-50 z-50' onClick={() => setSidebarOpen(false)}>
+          <div className='fixed left-0 top-0 w-64 h-full bg-white shadow-md p-5 flex flex-col' onClick={(e) => e.stopPropagation()}>
+            <button className='self-end' onClick={() => setSidebarOpen(false)}>
+              <X size={24} />
+            </button>
+            <nav className='mt-10 flex flex-col gap-4'>
+              <NavLink to='/' onClick={() => setSidebarOpen(false)}>HOME</NavLink>
+              <NavLink to='/trains' onClick={() => setSidebarOpen(false)}>TRAINS</NavLink>
+              <NavLink to='/about' onClick={() => setSidebarOpen(false)}>ABOUT</NavLink>
+              <NavLink to='/contact' onClick={() => setSidebarOpen(false)}>CONTACT</NavLink>
+            </nav>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Navbar;

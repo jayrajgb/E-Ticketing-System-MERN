@@ -21,3 +21,7 @@
 .grid-style{
     @apply grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))]
 }
+
+.input-style{
+    @apply border border-neutral-200 rounded w-full p-2 mt-1
+}
