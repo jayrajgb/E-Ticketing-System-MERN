@@ -17,6 +17,11 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+    setProfileMenuOpen(false);
+  };
+
   return (
     <div className='flex justify-between items-center text-sm py-4 mb-5 border-b border-b-gray-400'>
       <div className='flex items-center gap-2'>
@@ -36,7 +41,9 @@ const Navbar = () => {
           <li className='border border-gray-400 px-5 text-xs py-1.5 rounded-full'>Admin Panel</li>
         </NavLink>
       </ul>
-      <div className='flex items-center gap-4'>
+      
+      {/* Desktop Profile/Login Section */}
+      <div className='hidden md:flex items-center gap-4'>
         {token ? (
           <div className='flex items-center gap-2 cursor-pointer relative' onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
             <img className='w-8 rounded-full' src={profilepic} alt='profile' />
@@ -50,8 +57,27 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full hidden md:block cursor-pointer'>
+          <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full cursor-pointer'>
             Login / SignUp
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Profile Section */}
+      <div className='md:hidden flex items-center gap-2'>
+        {token ? (
+          <img 
+            className='w-8 rounded-full cursor-pointer' 
+            src={profilepic} 
+            alt='profile'
+            onClick={() => setSidebarOpen(true)}
+          />
+        ) : (
+          <button 
+            onClick={() => navigate('/login')} 
+            className='bg-primary text-white px-4 py-2 rounded-full text-xs cursor-pointer'
+          >
+            Login
           </button>
         )}
       </div>
@@ -61,12 +87,40 @@ const Navbar = () => {
         <button className='cursor-pointer self-end' onClick={() => setSidebarOpen(false)}>
           <X size={24} />
         </button>
-        <nav className='mt-10 flex flex-col gap-4'>
-          <NavLink to='/' onClick={() => setSidebarOpen(false)}>HOME</NavLink>
-          <NavLink to='/trains' onClick={() => setSidebarOpen(false)}>TRAINS</NavLink>
-          <NavLink to='/about' onClick={() => setSidebarOpen(false)}>ABOUT</NavLink>
-          <NavLink to='/contact' onClick={() => setSidebarOpen(false)}>CONTACT</NavLink>
-          <NavLink target='_blank' to='https://e-ticketing-system-admin.onrender.com/' className='border px-5 text-xs py-1.5 rounded-full text-center'>Admin Panel</NavLink>
+        
+        {/* Mobile Profile Section in Sidebar */}
+        {token && (
+          <div className='flex items-center gap-3 mt-4 mb-6 px-2'>
+            <img className='w-10 rounded-full' src={profilepic} alt='profile' />
+            <div className='flex flex-col'>
+              <span className='text-sm font-medium'>My Account</span>
+              <span className='text-xs text-gray-500'>View and edit profile</span>
+            </div>
+          </div>
+        )}
+
+        <nav className='flex flex-col gap-4'>
+          <NavLink to='/' onClick={closeSidebar} className='hover:text-primary py-2'>HOME</NavLink>
+          <NavLink to='/trains' onClick={closeSidebar} className='hover:text-primary py-2'>TRAINS</NavLink>
+          <NavLink to='/about' onClick={closeSidebar} className='hover:text-primary py-2'>ABOUT</NavLink>
+          <NavLink to='/contact' onClick={closeSidebar} className='hover:text-primary py-2'>CONTACT</NavLink>
+          
+          {token && (
+            <>
+              <NavLink to='/profile' onClick={closeSidebar} className='hover:text-primary py-2'>MY PROFILE</NavLink>
+              <NavLink to='/bookings' onClick={closeSidebar} className='hover:text-primary py-2'>BOOKINGS HISTORY</NavLink>
+              <button onClick={logout} className='text-left hover:text-primary py-2'>LOGOUT</button>
+            </>
+          )}
+          
+          <NavLink 
+            target='_blank' 
+            to='https://e-ticketing-system-admin.onrender.com/' 
+            className='border border-gray-400 px-5 text-xs py-1.5 rounded-full text-center mt-4'
+            onClick={closeSidebar}
+          >
+            Admin Panel
+          </NavLink>
         </nav>
       </div>
     </div>
