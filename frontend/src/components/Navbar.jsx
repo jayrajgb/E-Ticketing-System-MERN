@@ -8,14 +8,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const { token, setToken } = useContext(AppContext)
+  const { token, setToken } = useContext(AppContext);
 
   const logout = () => {
-    setProfileMenuOpen(false)
-    setToken("")
-    localStorage.removeItem("token")
-    navigate("/")
-  }
+    setProfileMenuOpen(false);
+    setToken("");
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
     <div className='flex justify-between items-center text-sm py-4 mb-5 border-b border-b-gray-400'>
@@ -28,22 +28,10 @@ const Navbar = () => {
         </div>
       </div>
       <ul className='hidden md:flex items-start gap-5 font-medium'>
-        <NavLink to='/'>
-          <li className='list-style'>HOME</li>
-          <hr className='hr-style' />
-        </NavLink>
-        <NavLink to='/trains'>
-          <li className='list-style'>TRAINS</li>
-          <hr className='hr-style' />
-        </NavLink>
-        <NavLink to='/about'>
-          <li className='list-style'>ABOUT</li>
-          <hr className='hr-style' />
-        </NavLink>
-        <NavLink to='/contact'>
-          <li className='list-style'>CONTACT</li>
-          <hr className='hr-style' />
-        </NavLink>
+        <NavLink to='/'><li className='list-style'>HOME</li></NavLink>
+        <NavLink to='/trains'><li className='list-style'>TRAINS</li></NavLink>
+        <NavLink to='/about'><li className='list-style'>ABOUT</li></NavLink>
+        <NavLink to='/contact'><li className='list-style'>CONTACT</li></NavLink>
         <NavLink target='_blank' to='https://e-ticketing-system-admin.onrender.com/'>
           <li className='border border-gray-400 px-5 text-xs py-1.5 rounded-full'>Admin Panel</li>
         </NavLink>
@@ -69,22 +57,18 @@ const Navbar = () => {
       </div>
 
       {/* Sidebar Menu */}
-      {sidebarOpen && (
-        <div className='fixed inset-0 bg-black bg-opacity-50 z-50' onClick={() => setSidebarOpen(false)}>
-          <div className='fixed left-0 top-0 w-64 h-full bg-white shadow-md p-5 flex flex-col' onClick={(e) => e.stopPropagation()}>
-            <button className='cursor-pointer self-end' onClick={() => setSidebarOpen(false)}>
-              <X size={24} />
-            </button>
-            <nav className='mt-10 flex flex-col gap-4'>
-              <NavLink to='/' onClick={() => setSidebarOpen(false)}>HOME</NavLink>
-              <NavLink to='/trains' onClick={() => setSidebarOpen(false)}>TRAINS</NavLink>
-              <NavLink to='/about' onClick={() => setSidebarOpen(false)}>ABOUT</NavLink>
-              <NavLink to='/contact' onClick={() => setSidebarOpen(false)}>CONTACT</NavLink>
-              <NavLink target="_blank" href="https://e-ticketing-system-admin.onrender.com" class="border px-5 text-xs py-1.5 rounded-full">Admin Panel</NavLink>
-            </nav>
-          </div>
-        </div>
-      )}
+      <div className={`fixed top-0 left-0 w-64 h-full bg-white shadow-md p-5 flex flex-col transition-transform duration-300 z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <button className='cursor-pointer self-end' onClick={() => setSidebarOpen(false)}>
+          <X size={24} />
+        </button>
+        <nav className='mt-10 flex flex-col gap-4'>
+          <NavLink to='/' onClick={() => setSidebarOpen(false)}>HOME</NavLink>
+          <NavLink to='/trains' onClick={() => setSidebarOpen(false)}>TRAINS</NavLink>
+          <NavLink to='/about' onClick={() => setSidebarOpen(false)}>ABOUT</NavLink>
+          <NavLink to='/contact' onClick={() => setSidebarOpen(false)}>CONTACT</NavLink>
+          <NavLink target='_blank' to='https://e-ticketing-system-admin.onrender.com/' className='border px-5 text-xs py-1.5 rounded-full text-center'>Admin Panel</NavLink>
+        </nav>
+      </div>
     </div>
   );
 };
