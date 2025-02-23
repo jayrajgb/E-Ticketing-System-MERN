@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext);
 
   const logout = () => {
     setProfileMenuOpen(false);
@@ -93,8 +93,7 @@ const Navbar = () => {
           <div className='flex items-center gap-3 mt-4 mb-6 px-2'>
             <img className='w-10 rounded-full' src={profilepic} alt='profile' />
             <div className='flex flex-col'>
-              <span className='text-sm font-medium'>My Account</span>
-              <span className='text-xs text-gray-500'>View and edit profile</span>
+              <span className='text-md font-medium uppercase'>{userData.name}</span>
             </div>
           </div>
         )}
