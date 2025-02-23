@@ -1,7 +1,14 @@
 # E-Ticketing System Setup Guide
 
 ## Visit Now!
-[E-Ticketing-System](https://e-ticketing-system-frontend.onrender.com/)
+[E-Ticketing-System Frontend](https://e-ticketing-system-frontend.onrender.com/)
+[E-Ticketing-System Database](https://e-ticketing-system-frontend.onrender.com/)
+
+## Sample Credentials for Testing
+- **ADMIN_EMAIL**: loki@gmail.com
+- **ADMIN_PASSWORD**: 30363036
+- **USER_EMAIL**: jayraj@gmail.com
+- **USER_PASSWORD**: jayraj@123
 
 ## Frontend Setup (React with Vite)
 

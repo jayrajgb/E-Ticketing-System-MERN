@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import trainimg from '../assets/trains.png'
 import { IndianRupeeIcon, Info, Trash2 } from 'lucide-react'
 import { toast } from "react-toastify";
@@ -15,6 +15,8 @@ const Book = () => {
   const [slotTime, setSlotTime] = useState("")
   const [passengers, setPassengers] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+
+  const navigate = useNavigate()
 
   const handleBookTicket = async () => {
     try {
@@ -60,8 +62,7 @@ const Book = () => {
 
       if (response.data.success) {
         toast.success("Ticket booked successfully!")
-        // You can add navigation here if needed
-        // navigate("/tickets")
+        navigate("/trains")
       } else {
         toast.error(response.data.message)
       }
