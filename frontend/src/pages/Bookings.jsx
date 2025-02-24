@@ -80,13 +80,13 @@ const Bookings = () => {
       </p>
       {bookings.map((booking) => (
         <div
-          className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b border-neutral-200 items-center"
+          className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b border-neutral-200 items-center "
           key={booking._id}
         >
           <div>
-            <img className="w-48 bg-indigo-50" src={trainimg} alt="train" />
+            <img className="w-48 bg-indigo-50 rounded" src={trainimg} alt="train" />
           </div>
-          <div className="flex-1 text-md text-neutral-600">
+          <div className="flex-1 text-md text-neutral-600 py-8 sm:py-6">
             <p className="text-neutral-800 font-semibold">{booking.trainInfo.name}</p>
             <p>
               <span className="text-neutral-800 font-medium">From: </span>
@@ -126,16 +126,17 @@ const Bookings = () => {
               Status: {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
             </p>
           </div>
-          <div className="flex flex-col gap-2 justify-end">
+          <div></div>
+          <div className="flex flex-col gap-2 justify-center">
             {(booking.status === 'Pending' || booking.status === 'Booked') && (
               <>
                 <button
-                  className="text-sm text-neutral-400 text-center sm:min-w-48 py-2 border border-neutral-400 hover:bg-primary hover:text-white transition-all duration-200"
+                  className="text-sm bg-primary sm:bg-white text-white sm:text-neutral-400 text-center sm:min-w-48 py-2 sm:border sm:border-neutral-400 hover:bg-primary hover:text-white transition-all duration-200"
                 >
                   Checkout
                 </button>
                 <button
-                  className="text-sm text-neutral-400 text-center sm:min-w-48 py-2 border border-neutral-400 hover:bg-red-700 hover:text-white transition-all duration-200"
+                  className="text-sm bg-red-700 sm:bg-white text-white sm:text-neutral-400 text-center sm:min-w-48 py-2 sm:border sm:border-neutral-400 hover:bg-red-700 hover:text-white transition-all duration-200"
                   onClick={() => handleCancelBooking(booking._id)}
                 >
                   Cancel Booking
@@ -144,7 +145,7 @@ const Bookings = () => {
             )}
             {booking.status === 'Cancelled' && (
               <button
-                className="text-sm text-neutral-400 text-center sm:min-w-48 py-2 border border-neutral-400 hover:bg-red-500 hover:text-white transition-all duration-200"
+                className="text-sm text-center sm:min-w-48 py-2 sm:border bg-red-700 sm:bg-white text-white sm:text-neutral-400 sm:border-neutral-400 hover:bg-red-700 hover:text-white transition-all duration-200"
                 onClick={() => handleRemoveBooking(booking._id)}
               >
                 Remove Booking

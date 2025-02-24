@@ -26,7 +26,7 @@ const Profile = () => {
   }
 
   return userData && (
-    <div className='max-w-lg flex flex-col gap-2'>
+    <div className='max-w-lg min-h-screen flex flex-col gap-2'>
       {
         isEdit ?
           <input type="text" className='bg-gray-100 rounded-sm text-3xl font-medium max-w-60 mt-4' value={userData.name} onChange={(e) => setUserData(prev => ({ ...prev, name: e.target.value }))} />

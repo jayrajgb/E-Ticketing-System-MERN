@@ -8,8 +8,8 @@ const Home = () => {
   const navigate = useNavigate()
   
   return (
-    <div>
-      <div className='flex h-auto flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20'>
+    <div className='min-h-screen'>
+      <div className=' flex h-auto flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20'>
         <div className='md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 m-auto md:py-[10vw]'>
           <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight'>
             Book Tickets <br /> With GoRail

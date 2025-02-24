@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 // import { trains } from '../assets/assets'
 import trainimg from '../assets/trains.png'
 import { useNavigate } from 'react-router-dom'
@@ -10,8 +10,12 @@ const Trains = () => {
 
   const { trains } = useContext(AppContext)
 
+  if(!trains || trains.length === 0){
+    return <div>Loading...</div>
+  }
+
   return (
-    <div>
+    <div className='min-h-screen'>
       <p className='text-gray-600'>Browse through various destinations.</p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
         {/* <div className='flex flex-col gap-4 text-sm text-gray-600'>

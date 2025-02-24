@@ -1,78 +1,110 @@
-# E-Ticketing System Setup Guide
+# E-Ticketing System (MERN Stack)
 
-## Visit Now!
-[E-Ticketing-System Frontend](https://e-ticketing-system-frontend.onrender.com/)
-[E-Ticketing-System Database](https://e-ticketing-system-frontend.onrender.com/)
+A full-stack e-ticketing system built using the MERN stack.
 
-## Sample Credentials for Testing
-- **ADMIN_EMAIL**: loki@gmail.com
-- **ADMIN_PASSWORD**: 30363036
-- **USER_EMAIL**: jayraj@gmail.com
-- **USER_PASSWORD**: jayraj@123
+## 🚀 Live Demo
+- [Frontend (User)](https://e-ticketing-system-frontend.onrender.com)
+- [Frontend (Admin)](https://e-ticketing-system-admin.onrender.com)
+- [Backend](https://e-ticketing-system-backend.onrender.com)
+- [MongoDB Connection](https://mongodb+srv://jayrajgb:Jayraj.vit%4021@test-org.wyzug.mongodb.net/)
 
-## Frontend Setup (React with Vite)
+## ⚙️ Tech Stack
 
-### Install Vite (React + JS)
+### Frontend (React + Vite)
+- **Vite** - Fast build tool for modern web apps.
+- **Axios** - API communication.
+- **Tailwind CSS** - Utility-first CSS framework.
+- **React Router DOM** - Navigation.
+- **React Toastify** - Notifications.
+- **Lucide React** - Icons.
+
+### Backend (Node.js + Express)
+- **Express** - Backend framework for APIs.
+- **Mongoose** - MongoDB object modeling.
+- **Dotenv** - Manage environment variables.
+- **Bcrypt** - Password hashing.
+- **JWT** - Authentication.
+- **CORS** - Cross-origin resource sharing.
+
+## 📂 Project Setup
+
+### Clone the Repository
 ```sh
-npm create vite@latest frontend
-cd frontend
-npm install
+  git clone https://github.com/jayrajgb/E-Ticketing-System-MERN.git
+  cd E-Ticketing-System-MERN
 ```
 
-### Install Required Packages
+### Backend Setup
 ```sh
-npm install axios tailwindcss react-router-dom react-toastify lucide-react
+  cd backend
+  npm install
+  npm start
 ```
 
-### Package Uses:
-- **Vite**: Fast build tool for frontend development.
-- **Axios**: Handles HTTP requests between frontend and backend.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **React Router DOM**: Manages frontend routing.
-- **React Toastify**: Displays toast notifications.
-- **Lucide React**: Provides icons for UI components.
-
-### Start Frontend
+### Frontend Setup (Admin)
 ```sh
-npm run dev
+  cd admin
+  npm install
+  npm run dev
 ```
 
-## Backend Setup (Express with Node.js)
-
-### Install Node.js and Initialize Project
+### Frontend Setup (User)
 ```sh
-mkdir backend && cd backend
-npm init -y
+  cd frontend
+  npm install
+  npm run dev
 ```
 
-### Install Required Packages
-```sh
-npm install express mongoose dotenv bcrypt jsonwebtoken cors
-```
+## 🚀 Deployment
+- **Frontend**: Deployed on Render.
+- **Backend**: Deployed on Render.
 
-### Package Uses:
-- **Express**: Framework for building backend APIs.
-- **Mongoose**: ODM for MongoDB interaction.
-- **Dotenv**: Loads environment variables from a `.env` file.
-- **Bcrypt.js**: Hashes passwords for security.
-- **JSON Web Token (JWT)**: Implements authentication.
-- **CORS**: Enables cross-origin requests.
+## 🎯 Features (Admin)
+- Add Trains
+- Set Prices and Train Information
+- View Trains
+- View Bookings
 
-### Start Backend
-```sh
-node index.js
-```
+## 🎯 Features (User)
+- Login/SignUp
+- Browse Trains
+- Edit Profile Information
+- Booking and Cancellation
+- Ticket booking for multiple passengers
+- Bookings History
 
-## Database Setup (MongoDB Atlas)
-1. Create a MongoDB Atlas account and a new cluster.
-2. Get the **connection string** from MongoDB Atlas.
-3. Add it to a `.env` file in the backend:
-```sh
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
+## 📜 Schemas
 
-## Deployment (Optional)
-- **Frontend**: Deployed on Render - [Visit here](https://e-ticketing-system-frontend.onrender.com/)
-- **Backend**: Deployed on Render
+### **User Schema**
+- Stores user details.
+- `name (String)`, `email (String, unique)`, `password (String)`, `phone (String, default: '0000000000')`, `age (Number, default: 18)`, `gender (String, default: 'Not Selected')`.
+
+### **Train Schema**
+- Stores train details.
+- `name (String)`, `code (String, unique)`, `from (String)`, `to (String)`, `seats (Number)`, `price (Number)`, `about (String)`.
+- `timings (Object)`: `startTime (Number)`, `intervals (Number)`.
+
+### **Ticket Schema**
+- Stores booking details.
+- `userId (String)`, `trainId (String)`, `trainInfo (Object: name, from, to, basePrice)`, `slotDate (Date)`, `slotTime (String)`, `totalAmount (Number)`, `status (String, default: 'Pending')`, `createdAt (Date, default: now)`.
+- Nested `passengerSchema` for individual passenger details: `name (String)`, `age (Number)`, `gender (String)`, `disability (Boolean, default: false)`, `price (Number)`.
+
+## 🔗 API Routes
+
+### **User Routes**
+- `POST /api/user/register` - Register user.
+- `POST /api/user/login` - Login user.
+- `GET /api/user/profile` - Get user details.
+- `POST /api/user/update` - Update user details.
+- `POST /api/user/book` - Book ticket.
+- `GET /api/user/bookings` - Get booking history.
+- `POST /api/user/bookings/cancel/:ticketId` - Cancel ticket.
+- `DELETE /api/user/bookings/remove/:ticketId` - Remove booking.
+
+### **Admin Routes**
+- `POST /api/admin/addtrain` - Add train.
+- `POST /api/admin/login` - Admin login.
+- `GET /api/admin/trains` - Get all trains.
+- `GET /api/admin/bookings` - Get all bookings.
+
 

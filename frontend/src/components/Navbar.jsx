@@ -33,10 +33,10 @@ const Navbar = () => {
         </div>
       </div>
       <ul className='hidden md:flex items-start gap-5 font-medium'>
-        <NavLink to='/'><li className='list-style'>HOME</li></NavLink>
-        <NavLink to='/trains'><li className='list-style'>TRAINS</li></NavLink>
-        <NavLink to='/about'><li className='list-style'>ABOUT</li></NavLink>
-        <NavLink to='/contact'><li className='list-style'>CONTACT</li></NavLink>
+        <NavLink to='/'><li className='list-style'>HOME</li> <hr className='hr-style' /> </NavLink>
+        <NavLink to='/trains'><li className='list-style'>TRAINS</li> <hr className='hr-style' /> </NavLink>
+        <NavLink to='/about'><li className='list-style'>ABOUT</li> <hr className='hr-style' /> </NavLink>
+        <NavLink to='/contact'><li className='list-style'>CONTACT</li> <hr className='hr-style' /> </NavLink>
         <NavLink target='_blank' to='https://e-ticketing-system-admin.onrender.com/'>
           <li className='border border-gray-400 px-5 text-xs py-1.5 rounded-full'>Admin Panel</li>
         </NavLink>

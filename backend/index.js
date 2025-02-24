@@ -25,7 +25,16 @@ app.use(express.json())
 app.use(cors())
 
 app.get("/", (req, res) => {
-    return res.send("Hello")
+    return res.send(`
+        <html>
+            <body>
+                <div style="text-align: center;">
+                    E-Ticketing-System Backend
+                </div>
+            </body>
+        </html>
+        `
+    )
 })
 
 app.post("/api/user/register", addUser)

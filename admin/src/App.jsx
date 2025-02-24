@@ -19,7 +19,7 @@ const App = () => {
     <div>
       <ToastContainer />
       <Navbar />
-      <div className='flex items-start'>
+      <div className='flex items-start min-h-screen'>
         <Sidebar />
         <Routes>
           <Route path='/' element={<></>} />

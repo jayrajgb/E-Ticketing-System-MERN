@@ -16,7 +16,7 @@ const AllBookings = () => {
   if (!bookings || bookings.length === 0) return <p>No bookings found.</p>;
 
   return (
-    <div className="sm:p-6 w-full">
+    <div className="sm:p-6 w-full min-h-screen border-l border-l-gray-400">
       <h1 className="mb-3 text-lg font-medium">All Bookings</h1>
 
       {bookings.map((booking) => (

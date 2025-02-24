@@ -71,7 +71,7 @@ const AddTrains = () => {
 
 
   return (
-    <form onSubmit={onSubmitHandler} className='sm:p-6 pr-0 w-full'>
+    <form onSubmit={onSubmitHandler} className='sm:p-6 min-h-screen pr-0 w-full border-l border-l-gray-400'>
       <p className='mb-3 text-lg font-medium'>
         Add Trains
       </p>
