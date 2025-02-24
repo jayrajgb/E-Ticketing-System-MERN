@@ -6,7 +6,10 @@ A full-stack e-ticketing system built using the MERN stack.
 - [Frontend (User)](https://e-ticketing-system-frontend.onrender.com)
 - [Frontend (Admin)](https://e-ticketing-system-admin.onrender.com)
 - [Backend](https://e-ticketing-system-backend.onrender.com)
-- [MongoDB Connection](https://mongodb+srv://jayrajgb:Jayraj.vit%4021@test-org.wyzug.mongodb.net/)
+
+## Note: Credentials for Admin Login
+- **ADMIN_EMAIL**: loki@gmail.com
+- **ADMIN_PASSWORD**: 30363036
 
 ## ⚙️ Tech Stack
 
