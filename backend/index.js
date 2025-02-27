@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const { connectDB } = require('./config/connection');
 const { addUser, loginUser, getUser, updateUser, bookTicket, listBookings, cancelBooking, removeBooking } = require('./controllers/userController');
-const { addTrain, loginAdmin, getAllTrains, getAllBookings } = require('./controllers/trainController');
+const { addTrain, loginAdmin, getAllTrains, getAllBookings, searchTrains, searchBookings } = require('./controllers/trainController');
 const { authAdmin } = require('./middlewares/authAdmin');
 const { authUser } = require('./middlewares/authUser');
 
@@ -51,6 +51,10 @@ app.post("/api/admin/login", loginAdmin)
 
 app.get("/api/admin/trains", getAllTrains)
 
+app.get("/api/admin/searchTrain/:key", searchTrains)
+
+app.get("/api/admin/bookings/:key", searchBookings)
+
 app.post("/api/user/book", authUser, bookTicket)
 
 app.get("/api/user/bookings", authUser, listBookings)
@@ -60,6 +64,8 @@ app.post("/api/user/bookings/cancel/:ticketId", authUser, cancelBooking)
 app.delete("/api/user/bookings/remove/:ticketId", authUser, removeBooking)
 
 app.get("/api/admin/bookings", getAllBookings);
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running at PORT: http://localhost:${PORT}`)

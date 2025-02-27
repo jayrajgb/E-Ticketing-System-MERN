@@ -16,6 +16,7 @@ const AddTrains = () => {
   const [price, setPrice] = useState(150)
   const [about, setAbout] = useState("")
   const [timings, setTimings] = useState({ startTime, intervals })
+  const [adding, setAdding] = useState(false)
 
   const { backendUrl, adminToken } = useContext(AdminContext)
 
@@ -32,6 +33,8 @@ const AddTrains = () => {
       if (from === to) {
         return toast.error("Source and Destination can't be same!")
       }
+
+      setAdding(true)
 
       const sendData = {
         name,
@@ -59,6 +62,7 @@ const AddTrains = () => {
         setSeats(40)
         setPrice(150)
         setAbout("")
+        setAdding(false)
       } else {
         toast.error(data.message)
       }
@@ -152,7 +156,7 @@ const AddTrains = () => {
           <p className='mt-4 mb-2'>About Train</p>
           <textarea onChange={(e) => setAbout(e.target.value)} value={about} className='border border-gray-200 px-3 py-2 w-full' placeholder='About Train' rows={3} />
         </div>
-        <button type='submit' className='cursor-pointer bg-primary px-10 py-3 mt-4 text-white rounded-full'>Add Train</button>
+        <button type='submit' className='cursor-pointer bg-primary px-10 py-3 mt-4 text-white rounded-full'  >Add Train</button>
       </div>
     </form>
   )

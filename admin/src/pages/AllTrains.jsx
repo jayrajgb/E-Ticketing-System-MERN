@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import trainimg from '../assets/trains.png'
+import { toast } from 'react-toastify'
 
 const AllTrains = () => {
 
-  const { adminToken, trains, getAllTrains } = useContext(AdminContext)
+  const { adminToken, trains, getAllTrains, searchTrains } = useContext(AdminContext)
+
+  const [key, setKey] = useState("")
 
   useEffect(() => {
     if (adminToken) {
@@ -12,10 +15,28 @@ const AllTrains = () => {
     }
   }, [adminToken])
 
+  const searchHandler = () => {
+    if(adminToken){
+      searchTrains(key)
+    }
+    else{
+      toast.error("Key must not be empty!")
+    }
+  }
+
+  useEffect(()=>{
+    console.log(trains)
+  },[trains])
+
 
   return (
     <div className='sm:p-6 min-h-screen w-full border-l border-l-gray-400'>
       <h1 className='mb-3 text-lg font-medium'>All Trains</h1>
+      <div>
+        <label htmlFor="">Key</label>
+        <input type="text" onChange={(e)=>setKey(e.target.value)} value={key} className='border'  />
+        <button onClick={searchHandler} className='bg-amber-300'>Search</button>
+      </div>
       <div className='w-full grid-style gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
         {
           trains.map((item, index) => (

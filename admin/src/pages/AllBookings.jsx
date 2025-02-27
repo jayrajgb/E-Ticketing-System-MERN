@@ -4,7 +4,7 @@ import trainimg from "../assets/trains.png"; // Ensure you have this image
 import { IndianRupeeIcon } from "lucide-react"; // Ensure correct import
 
 const AllBookings = () => {
-  const { adminToken, bookings, getAllBookings, loading } = useContext(AdminContext);
+  const { adminToken, bookings, getAllBookings, loading, searchBookings } = useContext(AdminContext);
 
   useEffect(() => {
     if (adminToken) {
@@ -12,11 +12,24 @@ const AllBookings = () => {
     }
   }, [adminToken]);
 
+  
+  function searchHandler(key){
+    searchBookings(key)
+  }
+  
+  useEffect(()=>{
+    console.log(bookings)
+  },[bookings])
+
   if (loading) return <p>Loading bookings...</p>;
   if (!bookings || bookings.length === 0) return <p>No bookings found.</p>;
 
   return (
     <div className="sm:p-6 w-full min-h-screen border-l border-l-gray-400">
+      <div>
+        <button onClick={()=>searchHandler("Cancelled")} className='bg-red-500'>Cancelled</button>
+        <button onClick={()=>searchHandler("Booked")} className='bg-green-500'>Booked</button>
+      </div>
       <h1 className="mb-3 text-lg font-medium">All Bookings</h1>
 
       {bookings.map((booking) => (

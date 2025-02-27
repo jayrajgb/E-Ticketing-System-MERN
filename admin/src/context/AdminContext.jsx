@@ -28,6 +28,38 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const searchTrains = async (key) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${backendUrl}/api/admin/searchTrain/${key}`);
+      if (data.success) {
+        setTrains(data.trains);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const searchBookings = async (key) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${backendUrl}/api/admin/bookings/${key}`);
+      if (data.success) {
+        setBookings(data.bookings);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const getAllBookings = async () => {
     if (!adminToken) return;
     try {
@@ -62,6 +94,8 @@ const AdminContextProvider = ({ children }) => {
     bookings,
     getAllBookings,
     loading,
+    searchTrains,
+    searchBookings
   };
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;

@@ -69,9 +69,44 @@ async function getAllBookings (req, res) {
     }
 }
 
+async function searchTrains (req, res) {
+    try{
+        const key = req.params.key;
+        // console.log(req.params)
+        const trains = await trainModel.find({
+            $or:[
+                { "name" : { $regex: key, $options: "i" }},
+                { "code" : { $regex: key, $options: "i" }},
+                { "from" : { $regex: key, $options: "i" }},
+                { "to" : { $regex: key, $options: "i" }},
+            ]
+        })
+        // console.log(`/${key}/`)
+        return res.send({ success: true, trains })
+    }catch(error){
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+async function searchBookings (req, res) {
+    try{
+        const key = req.params.key;
+        // console.log(req.params)
+        const bookings = await ticketModel.find(
+                { "status" : { $regex: key, $options: "i" }}
+        )
+        // console.log(`/${key}/`)
+        return res.send({ success: true, bookings })
+    }catch(error){
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
 module.exports = {
     addTrain,
     loginAdmin,
     getAllTrains,
-    getAllBookings
+    getAllBookings,
+    searchTrains,
+    searchBookings
 }
