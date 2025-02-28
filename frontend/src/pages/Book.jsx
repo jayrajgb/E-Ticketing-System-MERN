@@ -15,10 +15,14 @@ const Book = () => {
   const [slotTime, setSlotTime] = useState("")
   const [passengers, setPassengers] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const navigate = useNavigate()
 
   const handleBookTicket = async () => {
+    if (isSubmitting) {
+      return;
+    }
     try {
       if (!userData) {
         toast.error("Please login to book tickets")
@@ -29,6 +33,8 @@ const Book = () => {
         toast.error("Please fill all passenger details")
         return
       }
+
+      setIsSubmitting(true)
 
       // Get selected date
       const selectedDate = new Date()
@@ -62,6 +68,7 @@ const Book = () => {
 
       if (response.data.success) {
         toast.success("Ticket booked successfully!")
+        
         navigate("/trains")
       } else {
         toast.error(response.data.message)
@@ -69,6 +76,9 @@ const Book = () => {
 
     } catch (error) {
       toast.error(error.response?.data?.message || error.message)
+    }
+    finally{
+      setIsSubmitting(false)
     }
   }
 
@@ -198,10 +208,6 @@ const Book = () => {
       setPassengers(prev => prev.filter(p => p.id !== id));
     }
   }
-
-  // useEffect(() => {
-  //   console.log(trainSlots)
-  // }, [trainSlots])
 
   if (!trainInfo) {
     return <div className="p-4">Loading...</div>;
@@ -374,9 +380,9 @@ const Book = () => {
         <button
           onClick={handleBookTicket}
           className='bg-primary text-white text-sm font-medium px-14 py-3 rounded-full disabled:opacity-50 cursor-pointer'
-          disabled={!slotTime || passengers.some(p => !p.name || !p.age)}
+          disabled={isSubmitting || !slotTime || passengers.some(p => !p.name || !p.age)}
         >
-          Book Tickets
+          {isSubmitting ? 'Booking...' : 'Book Tickets'}
         </button>
       </div>
     </div>

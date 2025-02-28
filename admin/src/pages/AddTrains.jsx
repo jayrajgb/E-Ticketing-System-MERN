@@ -65,13 +65,15 @@ const AddTrains = () => {
         setSeats(40)
         setPrice(150)
         setAbout("")
-        setAdding(false)
+        
       } else {
         toast.error(data.message)
       }
 
     } catch (error) {
       toast.error(error.message)
+    }finally{
+      setAdding(false)
     }
 
   }
