@@ -23,7 +23,7 @@ const Navbar = () => {
         </div>
         <p className="border px-2.5 py-0.5 rounded-full border-gray-500 text-gray-600">Admin</p>
       </div>
-      <button onClick={logout} className='cursor-pointer bg-primary text-white text-sm px-10 py-2 rounded-full'>Logout</button>
+      <button onClick={logout} className='cursor-pointer bg-primary text-white text-sm px-10 py-2 rounded-full hover:bg-indigo-600'>Logout</button>
     </div>
   )
 }

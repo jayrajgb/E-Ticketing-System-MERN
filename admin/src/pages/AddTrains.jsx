@@ -33,6 +33,9 @@ const AddTrains = () => {
       if (from === to) {
         return toast.error("Source and Destination can't be same!")
       }
+      if(adding){
+        return 
+      }
 
       setAdding(true)
 

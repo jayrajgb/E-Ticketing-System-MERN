@@ -17,20 +17,20 @@ const AllBookings = () => {
     searchBookings(key)
   }
   
-  useEffect(()=>{
-    console.log(bookings)
-  },[bookings])
+  // useEffect(()=>{
+  //   console.log(bookings)
+  // },[bookings])
 
-  if (loading) return <p>Loading bookings...</p>;
-  if (!bookings || bookings.length === 0) return <p>No bookings found.</p>;
+  // if (loading) return <p>Loading bookings...</p>;
+  // if (!bookings || bookings.length === 0) return <p>No bookings found.</p>;
 
   return (
     <div className="sm:p-6 w-full min-h-screen border-l border-l-gray-400">
-      <div>
-        <button onClick={()=>searchHandler("Cancelled")} className='bg-red-500'>Cancelled</button>
-        <button onClick={()=>searchHandler("Booked")} className='bg-green-500'>Booked</button>
-      </div>
       <h1 className="mb-3 text-lg font-medium">All Bookings</h1>
+      <div className="flex gap-x-10 py-4 justify-center items-center mb-2">
+        <button onClick={()=>searchHandler("Booked")} className='cursor-pointer bg-primary text-white text-sm px-10 py-2 rounded-full hover:bg-indigo-600'>View Bookings</button>
+        <button onClick={()=>searchHandler("Cancelled")} className='cursor-pointer bg-primary text-white text-sm px-10 py-2 rounded-full hover:bg-indigo-600'>View Cancellations</button>
+      </div>
 
       {bookings.map((booking) => (
         <div

@@ -18,24 +18,20 @@ const AllTrains = () => {
   const searchHandler = () => {
     if(adminToken){
       searchTrains(key)
+      setKey("")
     }
     else{
       toast.error("Key must not be empty!")
     }
   }
 
-  useEffect(()=>{
-    console.log(trains)
-  },[trains])
-
-
   return (
     <div className='sm:p-6 min-h-screen w-full border-l border-l-gray-400'>
       <h1 className='mb-3 text-lg font-medium'>All Trains</h1>
-      <div>
-        <label htmlFor="">Key</label>
-        <input type="text" onChange={(e)=>setKey(e.target.value)} value={key} className='border'  />
-        <button onClick={searchHandler} className='bg-amber-300'>Search</button>
+      <div className='flex gap-x-4 py-4 justify-center items-center mb-2'>
+        <span>Browse Trains</span>
+        <input type="text" onChange={(e)=>setKey(e.target.value)} value={key} className='py-1 px-3 outline-primary border-1 border-primary cursor-pointer  hover:outline-indigo-600 rounded-full w-2/5'  />
+        <button onClick={searchHandler} className='cursor-pointer bg-primary text-white text-sm px-10 py-2 rounded-full hover:bg-indigo-600'>Search</button>
       </div>
       <div className='w-full grid-style gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
         {
